@@ -1,11 +1,20 @@
 ## =========================================================================
 ## @author Leonardo Florez-Valencia (florez-l@javeriana.edu.co)
+## Modified by Jose Zuluaga and Nicolas Vargas 
 ## =========================================================================
 
-import struct, sys, time
+import struct, sys, time, random
 from NaiveBubbleSort import *
 from ImprovedBubbleSort import *
 from InsertionSort import *
+
+## -------------------------------------------------------------------------
+def randomNumbers(e):
+  randomList=[]
+  for i in range(0,e):
+    n=random.randint(0,30000)
+    randomList.append(n)
+  return randomList
 
 ## -------------------------------------------------------------------------
 def IsSorted( S ):
@@ -18,7 +27,7 @@ def IsSorted( S ):
 
 ## -------------------------------------------------------------------------
 def DoExperiment( S, f ):
-  r = 5
+  r = 10
   t = 0
   s = True
   for i in range( r ):
@@ -34,24 +43,35 @@ def DoExperiment( S, f ):
 
 ## -------------------------------------------------------------------------
 # Inputs
-input_file = open( sys.argv[ 1 ], 'rb' )
-input_buffer = input_file.read( )
-input_file.close( )
+experiment = int(sys.argv[1])
 b = int( sys.argv[ 2 ] )
 e = int( sys.argv[ 3 ] )
 s = int( sys.argv[ 4 ] )
-
-# Data type configuration
-element_type = int
-element_size = 4
-element_id = 'i'
-N = len( input_buffer ) // element_size
-
-# Read sequence as numbers
 input_sequence = []
-for i in range( N ):
-  input_sequence += [ struct.unpack( element_id, input_buffer[ element_size * i : element_size * ( i + 1 ) ] )[ 0 ] ]
-# end for
+if(experiment == 1):
+  input_file = open( sys.argv[ 5 ], 'rb' )
+  input_buffer = input_file.read( )
+  input_file.close( )
+
+
+  # Data type configuration
+  element_type = int
+  element_size = 4
+  element_id = 'i'
+  N = len( input_buffer ) // element_size
+
+  # Read sequence as numbers
+  
+  for i in range( N ):
+    input_sequence += [ struct.unpack( element_id, input_buffer[ element_size * i : element_size * ( i + 1 ) ] )[ 0 ] ]
+  # end for
+elif(experiment == 2):
+  input_sequence = randomNumbers(e)
+  input_sequence.sort()
+
+elif(experiment == 3):
+  input_sequence = randomNumbers(e)
+  input_sequence.sort(reverse=True)
 
 # Perform experiments
 for n in range( b, e + 1, s ):
@@ -63,6 +83,6 @@ for n in range( b, e + 1, s ):
     sys.exit( 1 )
   # end if
   print( n, nbr[ 1 ], ibr[ 1 ], inr[ 1 ] )
-# end for
+# end fo
 
 ## eof - run_experiment.py
