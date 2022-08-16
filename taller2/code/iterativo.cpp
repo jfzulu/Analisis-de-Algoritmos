@@ -11,8 +11,8 @@ void ToBin(int n);
 void ToDec(int &n, int exp);
 int main()
 {
-    int n = -1;
-    while(n != 0){
+    int n ;
+
     cin >> n;
     auto start = std::chrono::high_resolution_clock::now();
     ToBin(n);
@@ -26,8 +26,7 @@ int main()
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
     std::cout << "El codigo se demoro: " << duration.count() << " microsegundos" << std::endl;
-    bin.clear();
-    }
+
     return 0;
 }
 

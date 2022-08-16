@@ -51,17 +51,19 @@ void binarizar(int numero)
 
 int main()
 {
-    
-   int numero = 1;
-    while (numero != 0)
+
+    int numero = 1;
+
+    int respuesta = 0;
+    int exp = 0;
+    std::cout << "Ingrese un numero ( escriba 0 para salir)" << std::endl;
+    std::cin >> numero;
+    if (numero == 0)
     {
-        int respuesta = 0;
-        int exp = 0;
-        std::cout << "Ingrese un numero ( escriba 0 para salir)" << std::endl;
-        std::cin >> numero;
-        if (numero==0){
-            std::cout << "El decimal del binario inverso es: " << 0 << std::endl;
-        }else{
+        std::cout << "El decimal del binario inverso es: " << 0 << std::endl;
+    }
+    else
+    {
         auto start = std::chrono::high_resolution_clock::now();
         binarizar(numero);
 
@@ -75,9 +77,7 @@ int main()
         auto stop = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stop - start);
         std::cout << "El codigo se demoro: " << duration.count() << " microsegundos" << std::endl;
-        numerosNuevos.clear();
-        numerosViejos.clear();
-        }
     }
+
     return 0;
 }
