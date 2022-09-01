@@ -33,14 +33,13 @@ function backtracking(B,s,e)
 
   if s+1 == e
 
-    return "A"*string(s)*" A"*string(e)*""
+    return "A"*string(s)*" A"*string(e)
   end
   if (s == e )
-
      return "A"*string(s)
   end
   
-  pos = B[s,e]
+  pos = Int(B[s,e])
   cadenaA = backtracking(B,s,pos)
   cadenaB = backtracking(B,pos+1,e)
 
@@ -81,10 +80,12 @@ function MM(d)
       end
     end
   end
+  display(S)
   
   println(backtracking(B, 1,length(d)-1))
   return S[1,n-1]
 end
 
-d=[10,100,5,50]
-println("El numero minimo de multiplicaciones es  "* string(MM(d)))
+d=[84,24,5,10,100,5,50]
+
+@time println("El numero minimo de multiplicaciones es  "* string(MM(d)))
