@@ -1,7 +1,3 @@
-
-// C++ program to find the longest path in a matrix
-// with given constraints
-
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -47,7 +43,7 @@ void fillMatrix(Matrix &M, BackTrack &B)
   }
 }
 
-int findLongestFromACell(int posR, int posC, Matrix &mat,Matrix &memo, BackTrack &back)
+int checkNeighbour_aux(int posR, int posC, Matrix &mat,Matrix &memo, BackTrack &back)
 {
     if (posR < 0 || posR >= cols || posC < 0 || posC >= rows)
         return 0;
@@ -60,16 +56,16 @@ int findLongestFromACell(int posR, int posC, Matrix &mat,Matrix &memo, BackTrack
  
 
     if (posC <rows - 1 && ((mat[posR][posC] + 1) == mat[posR][posC + 1]))
-        CP1 = 1 + findLongestFromACell(posR, posC + 1, mat, memo,back);
+        CP1 = 1 + checkNeighbour_aux(posR, posC + 1, mat, memo,back);
  
     if (posC > 0 && (mat[posR][posC] + 1 == mat[posR][posC - 1]))
-       CL1 = 1 + findLongestFromACell(posR, posC - 1, mat, memo,back);
+       CL1 = 1 + checkNeighbour_aux(posR, posC - 1, mat, memo,back);
  
     if (posR > 0 && (mat[posR][posC] + 1 == mat[ posR- 1][posC]))
-       RL1 = 1 + findLongestFromACell(posR - 1, posC, mat, memo,back);
+       RL1 = 1 + checkNeighbour_aux(posR - 1, posC, mat, memo,back);
  
     if (posR <rows - 1 && (mat[posR][posC] + 1 == mat[posR + 1][posC]))
-        RP1 = 1 + findLongestFromACell(posR + 1, posC, mat, memo,back);
+        RP1 = 1 + checkNeighbour_aux(posR + 1, posC, mat, memo,back);
  
 
     
@@ -124,7 +120,7 @@ void backtrack(Matrix M, BackTrack B, int posR, int posC)
 }
  
 
-int finLongestOverAll(Matrix mat)
+int checkNeighbour(Matrix mat)
 {
     int result = 0; 
     int posR,posC;
@@ -137,7 +133,7 @@ int finLongestOverAll(Matrix mat)
     for (int i = 0; i <rows; i++) {
         for (int j = 0; j <rows; j++) {
             if (memo[i][j] == -1)
-                findLongestFromACell(i, j, mat, memo, back);
+                checkNeighbour_aux(i, j, mat, memo, back);
             if(result < memo[i][j]){
                 result = memo[i][j];
                 posR = i;
@@ -281,6 +277,6 @@ int main()
     rows = mat.size();
     cols = mat[0].size();
   
-    finLongestOverAll(mat);
+    checkNeighbour(mat);
     return 0;
 }
