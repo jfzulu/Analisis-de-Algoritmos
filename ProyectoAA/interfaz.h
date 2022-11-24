@@ -16,7 +16,9 @@ public:
     bool validarFinalMov( Color mov, pair<int,int> target);
     bool validarExistente( Color mov, pair<int,int> target);
     bool validarGanador();
-    
+    pair<int,int> obtenerColor(int & n,vector<vector<bool> >& vis);
+    bool solucionar(int i, int j,vector<vector<bool> >& visitado, char & color);
+    bool valid(int i, int j, int & n,vector<vector<bool> >& vis);
 
 };
 

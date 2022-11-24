@@ -1,6 +1,79 @@
 #include "library.h"
 #include "interfaz.h"
 
+
+bool Interfaz::valid(int i, int j, int & n,vector<vector<bool> >& visitado){
+	return (i>=0 && j>=0 && i<=n-1 && j<=n-1 && visitado[i][j]==false);
+}
+
+int dx[4]={-1,0,0,1};
+int dy[4]={0,-1,1,0};
+pair<int,int> Interfaz::obtenerColor(int & n,vector<vector<bool> >& visitado){
+	pair<int,int> p;
+	p.first=-1;
+	p.second=-1;
+    bool encontro = false;
+    int i = 0;
+
+    while(!encontro && i<n){
+        int j = 0;
+        while(!encontro && j<n){
+            if(matriz[i][j]!=32 && visitado[i][j]==false){
+				p.first=i;
+				p.second=j;
+				encontro = true;
+			}
+            j++;
+        };
+        i++;
+    };
+    return p;
+
+	/*for(int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			if(matriz[i][j]!=32 && visitado[i][j]==false){
+				p.first=i;
+				p.second=j;
+				return p;
+			}
+		}
+	}
+	return p;*/
+}
+
+bool Interfaz::solucionar(int i, int j,vector<vector<bool> >& visitado, char & color){
+	
+    visitado[i][j]=true;
+
+	for(int p=0;p<4;p++){
+		int i1=i+dx[p];
+		int j1=j+dy[p];
+		if(valid(i1,j1,game.tam,visitado)){
+			if(matriz[i1][j1]==color){
+				visitado[i1][j1]=true;
+				pair<int,int> p=obtenerColor(game.tam,visitado);
+				if(p.first==-1 && p.second==-1){
+					return true;
+				}
+	            char c=matriz[p.first][p.second];
+	            if(solucionar(p.first,p.second,visitado,c)){
+	            	return true;
+	            }
+	            visitado[i1][j1]=false;
+			}
+			else if(matriz[i1][j1]==32){
+				matriz[i1][j1]=color;
+				if(solucionar(i1,j1,visitado,color)){
+					return true;
+				}
+				matriz[i1][j1]=32;
+			}
+		}
+	}
+	visitado[i][j]=false;
+	return false;
+}
+
 void Interfaz::initialMatrix()
 {
     int tam = this->game.tam;
