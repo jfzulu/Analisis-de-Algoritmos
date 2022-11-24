@@ -27,7 +27,7 @@ int main()
     time_t t1,t2;
     time(&t1);
     vector<vector<bool> > visitado(ui.game.tam,vector<bool>(ui.game.tam,false));
-    pair<int,int> p=ui.obtenerColor(ui.game.tam,visitado);
+    pair<int,int> p=ui.obtenerColor(visitado);
     char color=ui.matriz[p.first][p.second];
     ui.solucionar(p.first,p.second,visitado,color);
     time(&t2);

@@ -1,23 +1,24 @@
 #include "library.h"
 #include "interfaz.h"
 
-
-bool Interfaz::valid(int i, int j, int & n,vector<vector<bool> >& visitado){
-	return (i>=0 && j>=0 && i<=n-1 && j<=n-1 && visitado[i][j]==false);
-}
-
 int dx[4]={-1,0,0,1};
 int dy[4]={0,-1,1,0};
-pair<int,int> Interfaz::obtenerColor(int & n,vector<vector<bool> >& visitado){
+
+bool Interfaz::valid(int i, int j,vector<vector<bool> >& visitado){
+	return (i>=0 && j>=0 && i<=game.tam-1 && j<=game.tam-1 && visitado[i][j]==false);
+}
+
+
+pair<int,int> Interfaz::obtenerColor(vector<vector<bool> >& visitado){
 	pair<int,int> p;
 	p.first=-1;
 	p.second=-1;
     bool encontro = false;
     int i = 0;
 
-    while(!encontro && i<n){
+    while(!encontro && i<game.tam){
         int j = 0;
-        while(!encontro && j<n){
+        while(!encontro && j<game.tam){
             if(matriz[i][j]!=32 && visitado[i][j]==false){
 				p.first=i;
 				p.second=j;
@@ -28,17 +29,6 @@ pair<int,int> Interfaz::obtenerColor(int & n,vector<vector<bool> >& visitado){
         i++;
     };
     return p;
-
-	/*for(int i=0;i<n;i++){
-		for(int j=0;j<n;j++){
-			if(matriz[i][j]!=32 && visitado[i][j]==false){
-				p.first=i;
-				p.second=j;
-				return p;
-			}
-		}
-	}
-	return p;*/
 }
 
 bool Interfaz::solucionar(int i, int j,vector<vector<bool> >& visitado, char & color){
@@ -48,10 +38,10 @@ bool Interfaz::solucionar(int i, int j,vector<vector<bool> >& visitado, char & c
 	for(int p=0;p<4;p++){
 		int i1=i+dx[p];
 		int j1=j+dy[p];
-		if(valid(i1,j1,game.tam,visitado)){
+		if(valid(i1,j1,visitado)){
 			if(matriz[i1][j1]==color){
 				visitado[i1][j1]=true;
-				pair<int,int> p=obtenerColor(game.tam,visitado);
+				pair<int,int> p=obtenerColor(visitado);
 				if(p.first==-1 && p.second==-1){
 					return true;
 				}
